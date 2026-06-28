@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code
+.claude/
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Backups
+*.bak
+*.orig
+
+# Wrangler / Cloudflare (contains account ID cache)
+.wrangler/
+
+# Node
+node_modules/
+package-lock.json
+
+# Environment files — never commit secrets
+.env
+.env.*
+*.env
+
+# Dev-only patch and QA scripts (not part of the app)
+patch_*.py
+qa*.py
+fix_chart.py
+build_dashboard.py
+multi_ticker.py

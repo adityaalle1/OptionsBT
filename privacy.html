@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — OptionsBT</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter','Segoe UI',system-ui,sans-serif;background:#0b0f1a;color:#eef2ff;font-size:14px;line-height:1.7;padding:40px 20px;}
+.container{max-width:760px;margin:0 auto;}
+h1{font-size:24px;font-weight:700;color:#eef2ff;margin-bottom:6px;}
+.meta{color:#4a5680;font-size:12px;margin-bottom:36px;}
+h2{font-size:15px;font-weight:700;color:#a78bfa;margin:28px 0 10px;}
+p{color:#7e8fb5;margin-bottom:12px;}
+strong{color:#eef2ff;}
+ul{color:#7e8fb5;padding-left:20px;margin-bottom:12px;}
+ul li{margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:13px;}
+th{background:var(--bg2,#161d2e);color:#a78bfa;text-align:left;padding:8px 10px;border:1px solid #2a3550;}
+td{padding:8px 10px;border:1px solid #2a3550;color:#7e8fb5;vertical-align:top;}
+a{color:#a78bfa;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.back{display:inline-flex;align-items:center;gap:6px;color:#4a5680;font-size:12px;margin-bottom:28px;text-decoration:none;}
+.back:hover{color:#7e8fb5;}
+.highlight{background:#111827;border:1px solid #2a3550;border-left:3px solid #a78bfa;border-radius:6px;padding:14px 16px;margin:20px 0;color:#7e8fb5;}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="optionsbt.html" class="back">← Back to OptionsBT</a>
+  <h1>Privacy Policy</h1>
+  <div class="meta">Last updated: June 2025</div>
+
+  <div class="highlight">
+    <strong style="color:#eef2ff;">Summary:</strong> OptionsBT is a client-side educational tool. Without an account, all your data stays in your browser's localStorage — we never see it. If you create an account, we store your journal, sessions, and settings on our servers to enable sync across devices. We do not sell your data.
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>OptionsBT is an educational options trading simulator. References to "we", "us", or "our" refer to the operators of OptionsBT.</p>
+
+  <h2>2. Information We Collect</h2>
+
+  <p><strong>Without an account (guest mode):</strong></p>
+  <ul>
+    <li>No personal data is collected by us</li>
+    <li>All simulation data (journal entries, sessions, settings, cache) is stored in your browser's <strong>localStorage only</strong> — it never leaves your device</li>
+    <li>Standard server access logs may record your IP address and browser type when fetching data (standard for any web server)</li>
+  </ul>
+
+  <p><strong>With an account:</strong></p>
+  <table>
+    <tr><th>Data Type</th><th>What We Collect</th><th>Why</th></tr>
+    <tr><td>Account info</td><td>Email address, hashed password (or OAuth token)</td><td>Authentication and account recovery</td></tr>
+    <tr><td>Simulation data</td><td>Journal entries, saved sessions, strategy settings</td><td>Cross-device sync and backup</td></tr>
+    <tr><td>Usage data</td><td>Features used, error logs (no personally identifiable trading decisions)</td><td>Improving the product</td></tr>
+  </table>
+
+  <h2>3. How We Use Your Information</h2>
+  <ul>
+    <li>To provide and improve the Platform</li>
+    <li>To sync your simulation data across devices (if you have an account)</li>
+    <li>To send transactional emails (password reset, account confirmation) — we do not send marketing emails without explicit opt-in</li>
+    <li>To diagnose technical issues</li>
+  </ul>
+  <p>We <strong>do not</strong> sell, rent, or share your personal data with third parties for marketing purposes.</p>
+
+  <h2>4. Data Storage and Security</h2>
+  <p>Account data is stored in a Supabase-managed PostgreSQL database with row-level security. Data is encrypted in transit (HTTPS/TLS) and at rest. We use industry-standard security practices, but no system is 100% secure — use a strong, unique password.</p>
+  <p>Guest data lives only in your browser's localStorage. Clearing your browser data will permanently delete it, as we have no copy.</p>
+
+  <h2>5. Cookies and Local Storage</h2>
+  <p>We use browser <strong>localStorage</strong> (not cookies) to store simulation state, cache, and preferences. This data is:</p>
+  <ul>
+    <li>Stored only on your device</li>
+    <li>Not transmitted to our servers (in guest mode)</li>
+    <li>Cleared when you clear your browser data</li>
+  </ul>
+  <p>If you create an account, we use a session cookie for authentication only (no tracking cookies).</p>
+
+  <h2>6. Third-Party Services</h2>
+  <table>
+    <tr><th>Service</th><th>Purpose</th><th>Privacy Policy</th></tr>
+    <tr><td>Supabase</td><td>Authentication and database (account users only)</td><td><a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a></td></tr>
+    <tr><td>Cloudflare</td><td>Data proxy worker and CDN</td><td><a href="https://www.cloudflare.com/privacypolicy/" target="_blank">cloudflare.com/privacypolicy</a></td></tr>
+    <tr><td>Yahoo Finance / Stooq</td><td>Historical price data (public endpoints)</td><td>Third-party public data</td></tr>
+  </table>
+
+  <h2>7. Data Retention</h2>
+  <p>Guest mode: Data persists in your browser until you clear localStorage or delete it within the app. We hold no copy.</p>
+  <p>Account mode: Your data is retained for as long as your account is active, plus 30 days after deletion request to allow for recovery. You may delete your account and all associated data at any time.</p>
+
+  <h2>8. Your Rights</h2>
+  <p>You have the right to:</p>
+  <ul>
+    <li><strong>Access</strong> — request a copy of your personal data</li>
+    <li><strong>Correction</strong> — request correction of inaccurate data</li>
+    <li><strong>Deletion</strong> — request deletion of your account and all associated data</li>
+    <li><strong>Portability</strong> — export your journal and sessions as CSV/JSON</li>
+    <li><strong>Opt out</strong> — of any future marketing communications</li>
+  </ul>
+  <p>To exercise any of these rights, contact us through the portfolio site.</p>
+
+  <h2>9. Children's Privacy</h2>
+  <p>OptionsBT is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us personal information, please contact us and we will delete it.</p>
+
+  <h2>10. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. Changes will be posted here with an updated date. Continued use of the Platform after changes constitutes acceptance of the revised policy.</p>
+
+  <h2>11. Contact</h2>
+  <p>For privacy questions or to exercise your rights, contact us through the portfolio site.</p>
+
+  <p style="margin-top:32px;color:#4a5680;font-size:12px;">See also: <a href="disclaimer.html">Full Disclaimer</a> · <a href="tos.html">Terms of Service</a></p>
+</div>
+</body>
+</html>

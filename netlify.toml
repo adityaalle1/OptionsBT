@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+
+# Security headers on every page
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options          = "SAMEORIGIN"
+    X-Content-Type-Options   = "nosniff"
+    Referrer-Policy          = "strict-origin-when-cross-origin"
+    Permissions-Policy       = "camera=(), microphone=(), geolocation=()"
+
+# Tighter CSP on the backtester specifically
+[[headers]]
+  for = "/optionsbt.html"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co https://optionsbtproxy.asalle.workers.dev https://query1.finance.yahoo.com https://query2.finance.yahoo.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com https://proxy.cors.sh https://cors.eu.org https://thingproxy.freeboard.io https://corsproxy.org https://api.cors.lol; img-src 'self' data: blob:; frame-ancestors 'none'"
