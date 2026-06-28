@@ -35,3 +35,4 @@ qa*.py
 fix_chart.py
 build_dashboard.py
 multi_ticker.py
+.gstack/
