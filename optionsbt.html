@@ -3444,14 +3444,18 @@ function toast(msg,type='ok'){
   clearTimeout(toastTm); toastTm=setTimeout(()=>t.classList.remove('show'),3200);
 }
 
-function showConfirm(msg,onOk,title='Are you sure?'){
+function showConfirm(msg,onOk,title='Are you sure?',okLabel='Delete'){
   document.getElementById('confirmTitle').textContent=title;
   document.getElementById('confirmMsg').textContent=msg;
+  document.getElementById('confirmOk').textContent=okLabel;
   document.getElementById('confirmModal').classList.add('show');
   // replace onclick each call so stale refs can't fire
   document.getElementById('confirmOk').onclick=()=>{document.getElementById('confirmModal').classList.remove('show');onOk();};
   document.getElementById('confirmCancel').onclick=()=>document.getElementById('confirmModal').classList.remove('show');
 }
+
+let _sbClient = null;
+let _sbUser   = null;
 
 function maybeShowGuestBanner(){
   if(_sbUser) return;
@@ -3635,7 +3639,10 @@ document.getElementById('btnLoad').onclick=function(){
   loadTicker(t);
 };
 document.getElementById('tickInput').addEventListener('keydown',e=>{if(e.key==='Enter')loadTicker(e.target.value);});
-document.getElementById('btnReset').onclick=doReset;
+document.getElementById('btnReset').onclick=()=>{
+  if(S.data.length>0) showConfirm('Reset simulation? Your session progress will be auto-saved to History first.',doReset,'Reset Simulation','Reset');
+  else doReset();
+};
 document.getElementById('btnStart').onclick=()=>{if(!document.getElementById('tradeView').classList.contains('on'))switchView('trade');if(S.data.length){doReset();setTimeout(play,100);}else{loadTicker(document.getElementById('tickInput').value).then(()=>setTimeout(play,100));}};
 document.getElementById('btnScore').onclick=showScorecard;
 document.getElementById('btnHelp').onclick=()=>document.getElementById('welcomeOv').style.display='flex';
@@ -4347,9 +4354,6 @@ document.getElementById('btnClearHistory').onclick=()=>{
 // ponytail: anon key is PUBLIC by Supabase design — RLS policies are the security boundary, not key secrecy
 const _SB_URL      = 'https://pkyuhothcuvsjwxwvjls.supabase.co';
 const _SB_ANON_KEY = 'sb_publishable_QHLf6jmLMjCVDUXaZNgOkw_cSwlOjjZ';
-let _sbClient  = null;
-let _sbUser    = null;
-
 function _initSupabase(){
   try{
     _sbClient = window.supabase.createClient(_SB_URL, _SB_ANON_KEY);
@@ -4674,7 +4678,7 @@ obInit();
 
 <!-- LEGAL FOOTER -->
 <div class="legal-footer">
-  <span>© 2025 OptionsBT</span>
+  <span>© 2026 OptionsBT</span>
   <span>·</span>
   <a href="disclaimer.html" target="_blank">Disclaimer</a>
   <a href="tos.html" target="_blank">Terms of Service</a>
