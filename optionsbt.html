@@ -29,7 +29,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter','Segoe U
 input,select,button{font-family:inherit;}
 
 /* NAV */
-.nav{background:var(--bg1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:0;flex-shrink:0;height:52px;padding:0 16px;z-index:10;overflow:visible;}
+.nav{background:var(--bg1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:0;flex-shrink:0;height:52px;padding:0 16px;z-index:10;overflow-x:auto;overflow-y:visible;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav-tab{flex-shrink:0;}
 /* AUTH AVATAR + MENU */
 .auth-avatar{width:28px;height:28px;border-radius:50%;background:var(--pur);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--pur);flex-shrink:0;transition:opacity .15s;}
 .auth-avatar:hover{opacity:.8;}
@@ -914,7 +916,7 @@ const STRAT_PROFILES={
 const S = {
   ticker:null, data:[], bar:0, playing:false, timer:null, speed:2,
   capital:50000, cash:50000,
-  feesPaid:0, premCollected:0, realizedPnl:0, wins:0, losses:0,
+  feesPaid:0, premCollected:0, premPaid:0, realizedPnl:0, wins:0, losses:0,
   positions:[], pendingLegs:[], customNextLeg:null, shares:0, costBasis:0,
   trades:[], equityCurve:[], expDays:30, selStrike:null, selGreeks:null,
   strategy:'wheel', activeTab:'pos', range:'2y', companyName:'', selPosId:null, zoomBars:120, drawMode:false, drawLines:[], drawColor:'#f0883e',
@@ -1489,7 +1491,7 @@ async function loadTicker(t){
 
 function hardReset(){
   S.capital=Math.max(1000,parseInt(document.getElementById('capInput').value)||50000);
-  S.cash=S.capital; S.feesPaid=0; S.premCollected=0; S.realizedPnl=0;
+  S.cash=S.capital; S.feesPaid=0; S.premCollected=0; S.premPaid=0; S.realizedPnl=0;
   S.wins=0; S.losses=0; S.trades=[]; S.positions=[]; S.pendingLegs=[];
   S.shares=0; S.costBasis=0; S.selStrike=null; S.selGreeks=null;
   S.bar=startBar(); S.equityCurve=Array(S.bar+1).fill(S.capital);
@@ -2172,6 +2174,7 @@ function openPosition(type,action,K,iv,premium,dte){
   if(action==='buy'){
     if(S.cash<prem+fees){toast('Not enough cash ($'+(prem+fees).toFixed(0)+' needed)','err');return false;}
     S.cash-=(prem+fees);
+    S.premPaid+=prem;
   } else {
     let margin=0;
     if(type==='put') margin=K*100;
@@ -3212,7 +3215,7 @@ function showScorecard(){
   const maxEq=equityVals.length?Math.max(...equityVals):S.capital;
   const minEq=equityVals.length?Math.min(...equityVals):S.capital;
   const maxDD=(maxEq-minEq)/Math.max(1,maxEq)*100;
-  const feeImpact=S.feesPaid/Math.max(1,S.premCollected)*100;
+  const feeImpact=S.feesPaid/Math.max(1,S.premCollected+S.premPaid)*100;
   const totalRet=(eq-S.capital)/S.capital*100;
 
   const sc=calcScoreComponents(winRate,annRet,maxDD,closed.length,rr,feeImpact,S.strategy);
@@ -3310,7 +3313,7 @@ function saveSession(){
   const eqV=S.equityCurve.filter(v=>v>0);
   const mxEq=eqV.length?Math.max(...eqV):S.capital,mnEq=eqV.length?Math.min(...eqV):S.capital;
   const mxDD=(mxEq-mnEq)/Math.max(1,mxEq)*100;
-  const fi2=S.feesPaid/Math.max(1,S.premCollected)*100;
+  const fi2=S.feesPaid/Math.max(1,S.premCollected+S.premPaid)*100;
   const sc2=calcScoreComponents(closed.length?wins.length/closed.length:0,annRet,mxDD,closed.length,rr2,fi2,S.strategy);
   const session={
     id:Date.now(),
@@ -3349,6 +3352,8 @@ function saveSession(){
 function renderHistory(){
   const sessions=loadSessions();
   const body=document.getElementById('histBody');
+  const exportBtn=document.getElementById('btnExportSessions');
+  if(exportBtn){exportBtn.disabled=!sessions.length;exportBtn.style.opacity=sessions.length?'':'0.45';}
   if(!sessions.length){
     body.innerHTML=`<div class="no-hist">No saved sessions yet.<br>Sessions are automatically saved when you reset or load a new ticker.<br><br>Load a ticker, make some trades, then reset to create your first session!</div>`;
     return;
