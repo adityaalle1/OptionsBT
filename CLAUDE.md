@@ -1,4 +1,15 @@
 
+## Testing
+
+Run: `bun run test` (vitest, ~150ms)
+Tests live in `test/math-utils.test.js`.
+See `TESTING.md` for full conventions.
+
+- When writing new pure functions, add a corresponding test
+- When fixing a bug, write a regression test
+- When adding a conditional, test both branches
+- Never commit code that makes existing tests fail
+
 ## Skill routing
 
 When the user's request matches an available skill, invoke it via the Skill tool. When in doubt, invoke the skill.
