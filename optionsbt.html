@@ -5462,9 +5462,9 @@ obInit();
 <div id="stratHelpTooltip">← Learn this strategy</div>
 
 <!-- TD2/TD4: tutorial modal -->
-<div class="tutorial-modal-overlay" id="tutorialOverlay" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+<div class="tutorial-modal-overlay" id="tutorialOverlay" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle" onclick="if(event.target===this)closeTutorial()">
   <div class="tutorial-modal" id="tutorialModal">
-    <button class="tm-close" id="tutorialClose" aria-label="Close">✕</button>
+    <button class="tm-close" id="tutorialClose" aria-label="Close" onclick="closeTutorial()">✕</button>
     <h2 id="tutorialTitle"></h2>
     <div class="tm-type" id="tutorialType"></div>
     <div class="tm-benchmarks">
