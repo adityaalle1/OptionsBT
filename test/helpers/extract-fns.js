@@ -14,10 +14,10 @@ const lines = html.split('\n')
 
 // Line ranges (1-indexed) that contain pure, DOM-free functions
 const RANGES = [
-  [881, 885],    // COMMISSION, REG_FEE constants
-  [949, 1036],   // Technical analysis indicator functions
-  [1062, 1066],  // fmtAge
-  [1315, 1395],  // ncdf, npdf, bsm, calcHV, baseIV, ivForStrike, calcIVR, strikeStep, calcFees
+  [883, 887],    // COMMISSION, REG_FEE constants
+  [951, 1038],   // Technical analysis indicator functions
+  [1064, 1068],  // fmtAge
+  [1317, 1397],  // ncdf, npdf, bsm, calcHV, baseIV, ivForStrike, calcIVR, strikeStep, calcFees
 ]
 
 const code = RANGES
