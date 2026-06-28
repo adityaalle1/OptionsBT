@@ -100,6 +100,41 @@ input,select,button{font-family:inherit;}
 #stratSelect{background:var(--bg3);border:1px solid var(--bd);color:var(--t1);padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;outline:none;min-width:180px;transition:border-color .15s;}
 #stratSelect:focus{border-color:var(--blu);}
 
+/* TD2: strategy help circle button */
+.btn-circle{width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd);color:var(--t3);font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .12s;flex-shrink:0;line-height:1;}
+.btn-circle:hover{color:var(--t2);border-color:var(--t2);}
+.btn-circle.done{color:var(--grn);border-color:var(--grn);}
+
+/* TD2/TD4/TD6: tutorial modal */
+.tutorial-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9002;display:none;align-items:center;justify-content:center;}
+.tutorial-modal-overlay.show{display:flex;}
+.tutorial-modal{background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:24px;max-width:400px;width:90%;position:relative;max-height:90vh;overflow-y:auto;}
+.tutorial-modal h2{color:var(--t1);font-size:16px;margin:0 0 4px;}
+.tutorial-modal .tm-type{color:var(--t2);font-size:11px;margin-bottom:16px;}
+.tutorial-modal .tm-benchmarks{display:flex;gap:10px;margin-bottom:16px;}
+.tutorial-modal .tm-bench{background:var(--bg3);border-radius:8px;padding:8px 12px;flex:1;text-align:center;}
+.tutorial-modal .tm-bench-val{color:var(--t1);font-size:16px;font-weight:700;}
+.tutorial-modal .tm-bench-lbl{color:var(--t2);font-size:10px;margin-top:2px;}
+.tutorial-modal .tm-section{color:var(--t2);font-size:11px;font-weight:700;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.5px;}
+.tutorial-modal p{color:var(--t2);font-size:12px;margin:0 0 8px;line-height:1.6;}
+.tutorial-modal ul{margin:0;padding-left:16px;color:var(--t2);font-size:12px;line-height:1.8;}
+.tutorial-modal .tm-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;padding:0;line-height:1;}
+.tutorial-modal .tm-close:hover{color:var(--t1);}
+
+/* TD7: one-time learn tooltip */
+#stratHelpTooltip{position:fixed;background:var(--ylw);color:#0b0f1a;font-size:11px;font-weight:700;padding:5px 10px;border-radius:6px;z-index:9003;pointer-events:none;white-space:nowrap;display:none;}
+
+/* TD1/TD3/TD9: settings view */
+.settings-page{max-width:560px;margin:0 auto;padding:32px 20px;}
+.settings-section{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:16px;}
+.settings-section h3{color:var(--t1);font-size:13px;font-weight:700;margin:0 0 16px;}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);}
+.settings-row:last-child{border-bottom:none;}
+.settings-label{color:var(--t2);font-size:13px;}
+.settings-input{background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--t1);padding:5px 10px;font-size:13px;width:130px;outline:none;transition:border-color .15s;}
+.settings-input:focus{border-color:var(--blu);}
+.settings-sync-banner{background:var(--ylwD);border:1px solid var(--ylw);border-radius:8px;color:var(--ylw);padding:12px 16px;margin-bottom:20px;font-size:13px;display:flex;align-items:center;gap:10px;line-height:1.4;}
+
 .chips{display:flex;gap:4px;align-items:center;overflow-x:auto;flex-wrap:nowrap;flex:1;}
 .chip{padding:3px 10px;border-radius:5px;background:var(--bg3);border:1px solid var(--bd);color:var(--t3);font-size:11px;cursor:pointer;white-space:nowrap;font-weight:600;transition:all .12s;}
 .chip:hover{color:var(--t1);border-color:var(--bd2);}
@@ -456,6 +491,7 @@ input[type=range]{accent-color:var(--blu);cursor:pointer;width:70px;}
   <div class="nav-tab" data-view="trade">Trade</div>
   <div class="nav-tab" data-view="history">History</div>
   <div class="nav-tab" data-view="journal">Journal</div>
+  <div class="nav-tab" data-view="settings">⚙ Settings</div>
   <div class="nav-right">
     <div class="tick-wrap">
       <input id="tickInput" type="text" placeholder="AAPL" value="AAPL" maxlength="12" autocomplete="off">
@@ -474,6 +510,7 @@ input[type=range]{accent-color:var(--blu);cursor:pointer;width:70px;}
         <option value="ironCondor">Iron Condor</option>
         <option value="custom">⚙ Custom Builder</option>
       </select>
+      <button class="btn-circle" id="btnStratHelp" title="Strategy tutorial">?</button>
     </div>
     <span class="strat-label">Capital $</span>
     <input id="capInput" class="cap-input" type="number" value="50000" min="1000" step="5000">
@@ -779,6 +816,26 @@ input[type=range]{accent-color:var(--blu);cursor:pointer;width:70px;}
   <div class="hist-body" id="histBody"></div>
 </div>
 
+<!-- SETTINGS VIEW (TD1) -->
+<div class="view" id="settingsView" style="flex-direction:column;overflow-y:auto;background:var(--bg0);">
+  <div class="settings-page">
+    <div id="settingsSyncBanner" class="settings-sync-banner" style="display:none;">
+      <span>⚠ Sign in to sync your sessions and journal across devices.</span>
+      <button class="btn ylw" style="margin-left:auto;white-space:nowrap;" onclick="openAuthModal()">Sign In →</button>
+    </div>
+    <div class="settings-section">
+      <h3>Simulation Defaults</h3>
+      <div class="settings-row">
+        <span class="settings-label">Default Capital ($)</span>
+        <input type="number" class="settings-input" id="settingsCapital" min="1000" step="1000" style="text-align:right;">
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:4px;">
+      <button class="btn grn" id="btnSettingsSave">Save Settings</button>
+    </div>
+  </div>
+</div>
+
 <!-- CONFIRM MODAL -->
 <div class="modal-ov" id="confirmModal">
   <div class="modal" style="max-width:380px;padding:22px;">
@@ -908,6 +965,18 @@ const STRAT_PROFILES={
   bearPutSpread: {wr:.52,rr:.90,sell:false,retTarget:14},
   ironCondor:   {wr:.68,rr:.55,sell:true,retTarget:10},
   custom:       {wr:.50,rr:1.0,sell:false,retTarget:12},
+};
+
+const STRAT_TUTORIALS={
+  wheel:{type:'Income — Sell options repeatedly to generate recurring premium',how:'Sell a cash-secured put. If it expires worthless you keep the premium and repeat. If assigned you own shares — then sell covered calls until called away.',steps:['Sell a put at or below current price (0.30 delta)','Put expires worthless → collect premium, repeat','If assigned → own 100 shares, sell covered call above cost basis','Get called away at a profit → restart the cycle']},
+  csp:{type:'Income — Neutral to bullish, defined risk',how:'Sell a put below the current price. Collect premium upfront. Max profit if stock stays above strike. Max loss if stock falls to zero.',steps:['Pick a put strike at ~0.30 delta or lower','Sell to open, collect full premium','Let expire worthless (70%+ of the time)','Manage early if premium doubles against you (stop at 2× credit received)']},
+  cc:{type:'Income — Reduce cost basis on shares you own',how:'Own 100 shares, sell a call above your purchase price. Collect premium. You are capped at the strike on the upside.',steps:['Own 100 shares per contract','Sell a call at a strike above your cost basis','Collect premium every 30-45 DTE','Buy back early at 50% profit; roll up if the strike is tested']},
+  longCall:{type:'Directional — Bullish with defined risk',how:'Buy a call. Profit if the stock rises above your strike + premium paid before expiry. Your loss is capped at the premium paid.',steps:['Pick a strike at or slightly above current price','Buy 30-90 DTE to limit time-decay drag','Sell when premium doubles or cut at 50% loss','Exit with 21 DTE remaining to avoid theta acceleration']},
+  longPut:{type:'Directional — Bearish with defined risk',how:'Buy a put. Profit if the stock falls below your strike − premium paid. Risk is limited to the cost of the option.',steps:['Pick a strike at or slightly below current price','Buy 30-90 DTE','Sell when premium doubles or exit at 50% loss','Exit with 21 DTE remaining']},
+  bullCallSpread:{type:'Directional — Bullish with defined risk and reward',how:'Buy a lower call, sell a higher call at the same expiry. The short call caps both upside and cost versus a naked long call.',steps:['Buy the lower strike call (long leg)','Sell the higher strike call (short leg, same expiry)','Max profit = spread width − net debit','Close at 50-80% of max profit; do not hold through expiry']},
+  bearPutSpread:{type:'Directional — Bearish with defined risk and reward',how:'Buy a higher put, sell a lower put. The sold put reduces cost but caps how much you can make on the downside.',steps:['Buy the higher strike put (long leg)','Sell the lower strike put (short leg, same expiry)','Max profit = spread width − net debit','Close at 50-80% of max profit']},
+  ironCondor:{type:'Income — Non-directional, profits from low volatility',how:'Sell a call spread above and a put spread below current price. Collect net credit. Profit if price stays between the short strikes at expiry.',steps:['Sell a call spread above current price','Sell a put spread below current price','Max profit = net credit received if price stays inside','Close at 50% of credit; exit if losses hit 2× credit received']},
+  custom:{type:'Custom multi-leg strategy — build anything',how:'Combine any calls and puts to express a complex view. Each leg is priced with Black-Scholes. Useful for butterflies, straddles, and hedges.',steps:['Select each leg in sequence in the Trade tab','The simulator prices all legs independently','Manage each leg separately at expiry','Track net debit or credit as your max risk or income']},
 };
 
 /* ══════════════════════════════════════════════════════════════════
@@ -3353,7 +3422,7 @@ function renderHistory(){
   const sessions=loadSessions();
   const body=document.getElementById('histBody');
   const exportBtn=document.getElementById('btnExportSessions');
-  if(exportBtn){exportBtn.disabled=!sessions.length;exportBtn.style.opacity=sessions.length?'':'0.45';}
+  if(exportBtn){exportBtn.disabled=!sessions.length;exportBtn.style.opacity=sessions.length?'':'0.45';exportBtn.title=sessions.length?'':'No sessions to export yet';}
   if(!sessions.length){
     body.innerHTML=`<div class="no-hist">No saved sessions yet.<br>Sessions are automatically saved when you reset or load a new ticker.<br><br>Load a ticker, make some trades, then reset to create your first session!</div>`;
     return;
@@ -3584,6 +3653,7 @@ function switchView(v){
   if(v==='history') renderHistory();
   if(v==='journal') renderJournal();
   if(v==='dash') renderDashboard();
+  if(v==='settings') renderSettings();
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -4306,11 +4376,13 @@ function exportSessionsCSV(){
     s.closedCount||0,s.premiumCollected||0,s.feesPaid||0,s.realizedPnl||0,
     s.score||'',s.startDate||'',s.endDate||''
   ].join(','));
-  const csv=[hdr.join(','),...rows].join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='optionsbt_sessions.csv';a.click();
-  toast('Sessions exported!','ok');
+  try{
+    const csv=[hdr.join(','),...rows].join('\n');
+    const a=document.createElement('a');
+    a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+    a.download='optionsbt_sessions.csv';a.click();
+    toast('Sessions exported!','ok');
+  }catch(e){toast('Export failed — try again','err');}
 }
 
 function printScorecard(){
@@ -4389,6 +4461,9 @@ function _updateAuthUI(){
     avatar.style.display    = 'none';
     document.getElementById('authMenu').classList.remove('show');
   }
+  // TD9: update settings banner whenever auth state changes
+  const banner=document.getElementById('settingsSyncBanner');
+  if(banner) banner.style.display=_sbUser?'none':'flex';
 }
 
 function openAuthModal(){
@@ -4583,13 +4658,104 @@ _initSupabase();
 buildExpRow();
 window.addEventListener('load',()=>{resizeMC();renderIndChips();});
 
+// ── SETTINGS (TD1/TD3/TD9) ───────────────────────────────────────────────────
+function renderSettings(){
+  const s=JSON.parse(localStorage.getItem('obt_settings')||'{}');
+  document.getElementById('settingsCapital').value=s.capital||50000;
+  const banner=document.getElementById('settingsSyncBanner');
+  if(banner) banner.style.display=_sbUser?'none':'flex';
+}
+function saveSettings(){
+  const btn=document.getElementById('btnSettingsSave');
+  const orig=btn.textContent;
+  btn.disabled=true; btn.textContent='Saving…'; btn.style.opacity='.6';
+  try{
+    const cap=parseInt(document.getElementById('settingsCapital').value)||50000;
+    localStorage.setItem('obt_settings',JSON.stringify({capital:cap}));
+    document.getElementById('capInput').value=cap;
+    btn.textContent='✓ Saved'; btn.style.opacity='';
+    setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},1800);
+  }catch(e){
+    btn.textContent=orig; btn.disabled=false; btn.style.opacity='';
+    toast('Failed to save settings','err');
+  }
+}
+document.getElementById('btnSettingsSave').onclick=saveSettings;
+
+// Apply saved default capital on load
+(function(){
+  try{
+    const s=JSON.parse(localStorage.getItem('obt_settings')||'{}');
+    if(s.capital){document.getElementById('capInput').value=s.capital;S.capital=s.capital;S.cash=s.capital;}
+  }catch(e){}
+})();
+
+// ── STRATEGY TUTORIAL (TD2/TD4/TD6/TD7) ─────────────────────────────────────
+function openTutorial(){
+  const strat=document.getElementById('stratSelect').value;
+  const t=STRAT_TUTORIALS[strat]||STRAT_TUTORIALS.custom;
+  const p=STRAT_PROFILES[strat]||STRAT_PROFILES.custom;
+  document.getElementById('tutorialTitle').textContent=STRATS[strat]?.name||strat;
+  document.getElementById('tutorialType').textContent=t.type;
+  document.getElementById('tutorialWR').textContent=Math.round((p.wr||.5)*100)+'%';
+  document.getElementById('tutorialRR').textContent=(p.rr||1).toFixed(1)+'×';
+  document.getElementById('tutorialRet').textContent=(p.retTarget||10)+'%';
+  document.getElementById('tutorialHow').textContent=t.how;
+  document.getElementById('tutorialSteps').innerHTML=t.steps.map(s=>`<li>${s}</li>`).join('');
+  document.getElementById('tutorialOverlay').classList.add('show');
+  document.getElementById('tutorialClose').focus();
+  localStorage.setItem('tutorial_seen_'+strat,'1');
+  document.getElementById('stratHelpTooltip').style.display='none';
+  updateTutorialBtn();
+}
+function closeTutorial(){
+  document.getElementById('tutorialOverlay').classList.remove('show');
+}
+function updateTutorialBtn(){
+  const strat=document.getElementById('stratSelect').value;
+  const seen=!!localStorage.getItem('tutorial_seen_'+strat);
+  const btn=document.getElementById('btnStratHelp');
+  btn.textContent=seen?'✓':'?';
+  btn.classList.toggle('done',seen);
+}
+function maybeShowTutorialTooltip(){
+  const strat=document.getElementById('stratSelect').value;
+  if(localStorage.getItem('tutorial_seen_'+strat)||localStorage.getItem('tutorial_tooltip_shown')) return;
+  const btn=document.getElementById('btnStratHelp');
+  const r=btn.getBoundingClientRect();
+  const tt=document.getElementById('stratHelpTooltip');
+  tt.style.left=(r.left-140)+'px';
+  tt.style.top=(r.bottom+6)+'px';
+  tt.style.display='block';
+  localStorage.setItem('tutorial_tooltip_shown','1');
+  setTimeout(()=>{tt.style.display='none';},4000);
+}
+document.getElementById('btnStratHelp').onclick=openTutorial;
+document.getElementById('tutorialClose').onclick=closeTutorial;
+document.getElementById('tutorialOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('tutorialOverlay'))closeTutorial();});
+// TD4: ESC close + focus trap
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&document.getElementById('tutorialOverlay').classList.contains('show')){closeTutorial();return;}
+  if(e.key==='Tab'&&document.getElementById('tutorialOverlay').classList.contains('show')){
+    const focusable=[...document.getElementById('tutorialModal').querySelectorAll('button,[tabindex]:not([tabindex="-1"])')];
+    if(!focusable.length) return;
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+document.getElementById('stratSelect').addEventListener('change',updateTutorialBtn);
+updateTutorialBtn();
+setTimeout(maybeShowTutorialTooltip,2500);
+
 // ── ONBOARDING ────────────────────────────────────────────────────────────────
 const OB_STEPS=[
   {el:'#tickInput',  group:[['#tickInput','#btnLoad']], title:'Step 1 of 4 — Load a stock',    body:'Type a ticker (try <strong>SPY</strong>) then click <strong>Load</strong>. This fetches 2 years of historical price data.',      btn:'Got it →', pre:()=>document.querySelector('[data-view="trade"]').click()},
   {el:'#btnStart',   group:[['#btnStart']],             title:'Step 2 of 4 — Start',           body:'Click <strong>▶ Start</strong> to begin the simulation. The chart will advance bar by bar through history.',                       btn:'Got it →'},
   {el:'#rpBody',     group:[['#rpBody']],               title:'Step 3 of 4 — Open a position', body:'Use the action buttons here to open a trade. For <strong>Wheel</strong>, click <strong>Sell CSP</strong> to sell a cash-secured put.', btn:'Got it →'},
   {el:'#btnSkipExp', group:[['#btnSkipExp']],           title:'Step 4 of 4 — Skip to expiry',  body:'Click <strong>⏩ Skip to Expiry</strong> to fast-forward. Your contract closes when the option expires.',                          btn:'Got it →'},
-  {el:'#btnScore',   group:[['#btnScore']],             title:'View your scorecard',            body:'After saving your session, click <strong>★ Score</strong> to see a full performance breakdown. You\'re all set!',                  btn:'Start trading →', last:true},
+  {el:'#btnScore',   group:[['#btnScore']],             title:'View your scorecard',            body:'After saving your session, click <strong>★ Score</strong> to see a full performance breakdown.',                                    btn:'Next →'},
+  {el:'[data-view="settings"]', group:[['[data-view="settings"]']], title:'Explore Settings',  body:'Customize your default capital and save your preferences here. The <strong>?</strong> button next to the strategy picker opens a strategy tutorial anytime.', btn:'Start trading →', last:true, pre:()=>document.querySelector('[data-view="settings"]').click()},
 ];
 let _obStep=0;
 
@@ -4679,6 +4845,27 @@ obInit();
   <div class="ob-tip-body" id="obTipBody"></div>
   <button class="ob-tip-btn" id="obTipBtn" onclick="obNext()"></button>
   <div class="ob-tip-skip" onclick="obDone()">Skip tour</div>
+</div>
+
+<!-- TD7: one-time tooltip -->
+<div id="stratHelpTooltip">← Learn this strategy</div>
+
+<!-- TD2/TD4: tutorial modal -->
+<div class="tutorial-modal-overlay" id="tutorialOverlay" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+  <div class="tutorial-modal" id="tutorialModal">
+    <button class="tm-close" id="tutorialClose" aria-label="Close">✕</button>
+    <h2 id="tutorialTitle"></h2>
+    <div class="tm-type" id="tutorialType"></div>
+    <div class="tm-benchmarks">
+      <div class="tm-bench"><div class="tm-bench-val" id="tutorialWR"></div><div class="tm-bench-lbl">Target Win Rate</div></div>
+      <div class="tm-bench"><div class="tm-bench-val" id="tutorialRR"></div><div class="tm-bench-lbl">R:R Ratio</div></div>
+      <div class="tm-bench"><div class="tm-bench-val" id="tutorialRet"></div><div class="tm-bench-lbl">Ann. Target</div></div>
+    </div>
+    <div class="tm-section">How it works</div>
+    <p id="tutorialHow"></p>
+    <div class="tm-section">Playbook</div>
+    <ul id="tutorialSteps"></ul>
+  </div>
 </div>
 
 <!-- LEGAL FOOTER -->
