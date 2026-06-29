@@ -3210,8 +3210,8 @@ function renderPositions(body){
   const acct=`
     <div class="st-row"><span class="st-lbl">Total Equity</span><span class="st-val ${eq>=S.capital?'c-grn':'c-red'}">$${eq.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}</span></div>
     <div class="st-row"><span class="st-lbl">Cash Available</span><span class="st-val">$${S.cash.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}</span></div>
-    <div class="st-row"><span class="st-lbl">Realized P&L</span><span class="st-val ${S.realizedPnl>=0?'c-grn':'c-red'}">${S.realizedPnl>=0?'+':''}$${Math.abs(S.realizedPnl).toFixed(0)}</span></div>
-    <div class="st-row"><span class="st-lbl">Unrealized P&L</span><span class="st-val ${upnl>=0?'c-grn':'c-red'}">${upnl>=0?'+':''}$${Math.abs(upnl).toFixed(0)}</span></div>
+    <div class="st-row"><span class="st-lbl">Realized P&L</span><span class="st-val ${S.realizedPnl>=0?'c-grn':'c-red'}">${S.realizedPnl>=0?'+':'-'}$${Math.abs(S.realizedPnl).toFixed(0)}</span></div>
+    <div class="st-row"><span class="st-lbl">Unrealized P&L</span><span class="st-val ${upnl>=0?'c-grn':'c-red'}">${upnl>=0?'+':'-'}$${Math.abs(upnl).toFixed(0)}</span></div>
     <div class="st-row"><span class="st-lbl">Fees Paid</span><span class="st-val c-red">$${S.feesPaid.toFixed(2)}</span></div>
     <div class="st-row"><span class="st-lbl">Win Rate</span><span class="st-val c-blu">${tot?Math.round(S.wins/tot*100)+'% ('+S.wins+'W/'+S.losses+'L)':'—'}</span></div>
     <div class="st-row"><span class="st-lbl">Ann. Return</span><span class="st-val ${annRet>=0?'c-grn':'c-red'}">${annRet>=0?'+':''}${annRet.toFixed(1)}%</span></div>`;
