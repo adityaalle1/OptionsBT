@@ -4510,8 +4510,8 @@ function renderJournal(){
   const avgPnl=closed.length?totalPnl/closed.length:0;
   const se=document.getElementById('jStatEntries');if(se)se.textContent=entries.length;
   const sw=document.getElementById('jStatWins');if(sw){sw.textContent=closed.length?Math.round(wins.length/closed.length*100)+'%':'—';sw.style.color=closed.length?'var(--grn)':'var(--t3)';}
-  const sa=document.getElementById('jStatAvgPnl');if(sa){sa.textContent=closed.length?(avgPnl>=0?'+':'')+'\$'+Math.abs(avgPnl).toFixed(0):'—';sa.style.color=avgPnl>=0?'var(--grn)':'var(--red)';}
-  const sp=document.getElementById('jStatPnl');if(sp){sp.textContent=closed.length?(totalPnl>=0?'+':'')+'\$'+Math.abs(totalPnl).toFixed(0):'—';sp.style.color=totalPnl>=0?'var(--grn)':'var(--red)';}
+  const sa=document.getElementById('jStatAvgPnl');if(sa){sa.textContent=closed.length?(avgPnl>=0?'+':'-')+'\$'+Math.abs(avgPnl).toFixed(0):'—';sa.style.color=avgPnl>=0?'var(--grn)':'var(--red)';}
+  const sp=document.getElementById('jStatPnl');if(sp){sp.textContent=closed.length?(totalPnl>=0?'+':'-')+'\$'+Math.abs(totalPnl).toFixed(0):'—';sp.style.color=totalPnl>=0?'var(--grn)':'var(--red)';}
   const list=document.getElementById('jList');if(!list)return;
   if(!filt.length){
     list.innerHTML=`<div class="j-empty">${entries.length?'No entries match filters.':'No journal entries yet.<br>Entries are created automatically<br>when you open positions.<br><br><span style="color:var(--blu);">Head to the Trade tab<br>and start a position!</span>'}</div>`;
