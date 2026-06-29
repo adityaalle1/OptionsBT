@@ -17,7 +17,7 @@ const RANGES = [
   [1307, 1311],  // COMMISSION, REG_FEE constants
   [1387, 1451],  // Technical analysis indicator functions
   [1500, 1504],  // fmtAge
-  [1753, 1833],  // ncdf, npdf, bsm, calcHV, baseIV, ivForStrike, calcIVR, strikeStep, calcFees
+  [1754, 1834],  // ncdf, npdf, bsm, calcHV, baseIV, ivForStrike, calcIVR, strikeStep, calcFees
 ]
 
 const code = RANGES
