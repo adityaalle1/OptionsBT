@@ -77,7 +77,7 @@ Four components, 25 points each (100 pts total), graded A+ → F:
 |-----------|----------------|
 | Returns (Annualized) | Your annualized return vs a benchmark |
 | Risk Control (Max Drawdown) | How much drawdown you absorbed |
-| Win Rate | Win rate vs the strategy's researched benchmark |
+| Win Rate / R:R | Win rate vs the strategy's researched benchmark (buy strategies score on risk/reward ratio instead) |
 | Discipline (Fees + Frequency) | Fee impact and position frequency |
 
 Includes personalized coach's notes based on your actual results. **PDF export** via browser print.
@@ -102,7 +102,7 @@ Full 7-pane settings portal accessible from the nav bar (⚙):
 All settings save instantly to `localStorage` and sync to Supabase when signed in.
 
 ### Themes & Appearance
-- 4 visual themes: **default** (dark navy), **midnight**, **slate**, **emerald**
+- 4 visual themes: **navy**, **midnight**, **slate**, **emerald**
 - 6 accent colors — changes the highlight color across the whole app
 - Live preview before applying; persists across sessions
 
